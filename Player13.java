@@ -1,11 +1,17 @@
 import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Properties;
 
+
 public class Player13 implements ContestSubmission{
     Random rand;
+
+    private static final Rand cauchy = new Rand.Cauchy(0d,1d);
+    final private ArrayList<Individual> population;
+
     ContestEvaluation evaluation;
     final Parameters p = new Parameters();
 
@@ -14,7 +20,15 @@ public class Player13 implements ContestSubmission{
     public Player13 ()
     {
         rand = new Random();
+        //Create a population of 'individuals'
+        population = new ArrayList<Individual>(p.population_size);
+        for(int i = 0; i < p.population_size; i++)
+        {
+            population.add(new Individual(cauchy,p));
+        }
+
     }
+
 
     public void setSeed(long seed)
     {
@@ -59,15 +73,16 @@ public class Player13 implements ContestSubmission{
 
     public void run()
     {
-        // Run your algorithm here
+        //Stay within the amount of tries set by the server
+        for(int i = 0; i < eval_limit; i++)
+        {
 
-        // Getting data from evaluation problem (depends on the specific evaluation implementation)
-        // E.g. getting a vector of numbers
-        // Vector<Double> data = (Vector<Doulbe>)evaluation_.getData("trainingset1");
+        }
 
-        // Evaluating your results
-        // E.g. evaluating a series of true/false predictions
-        // boolean pred[] = ...
-        // Double score = (Double)evaluation_.evaluate(pred);
+        /*
+        to evaluate an individual:
+        evaluation.evaluate(individual));
+         */
+
     }
 }
