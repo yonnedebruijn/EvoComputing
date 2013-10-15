@@ -1,7 +1,7 @@
 public class Parameters {
     // algorithm parameters
     public double mutation_rate = 0.1; // how often a mutation takes place
-    public int population_size = 10;
+    public int population_size = 50;
     public int vector_length = 10;
 
     // lower and upper range the mutation-values can take
@@ -13,8 +13,8 @@ public class Parameters {
     public double up_vector_range = 5;
 
     // sizes of the parent and elite portion in %
-    public double parent_size = 0.4;
-    public double elite_size = 0.2;
+    public double parent_portion = 0.4;
+    public double elite_portion = 0.2;
 
 
 

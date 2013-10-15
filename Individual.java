@@ -1,5 +1,5 @@
 // An individual encodes a single vector of numbers
-public class Individual {
+public class Individual implements Comparable<Individual> {
     public double vector[];
     private double fitness;
 
@@ -10,7 +10,10 @@ public class Individual {
         fitness = 0;
         for(int i = 0; i < p.vector_length; i++)
         {
-            vector[i] = c.rnd();
+            double vector_value = c.rnd();
+            while(vector_value < p.lr_vector_range || vector_value > p.up_vector_range)
+                vector_value = c.rnd();
+            vector[i] = vector_value;
         }
 
     }
@@ -64,5 +67,10 @@ public class Individual {
                 vector[i] += noise;
             }
         }
+    }
+
+    @Override
+    public int compareTo(Individual i) {
+        return getFitness() < i.getFitness() ? 1 : getFitness() > i.getFitness() ? -1 : 0;
     }
 }
