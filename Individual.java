@@ -1,18 +1,21 @@
+import java.util.Random;
+
 // An individual encodes a single vector of numbers
 public class Individual implements Comparable<Individual> {
     private double vector[];
     private double fitness;
+    Random rand;
 
 
-    public Individual (Rand c, Parameters p)
+    public Individual (Random c, Parameters p)
     {
         vector = new double[p.vector_length];
         fitness = 0;
         for(int i = 0; i < p.vector_length; i++)
         {
-            double vector_value = c.rnd();
+            double vector_value = c.nextDouble();
             while(vector_value < p.lr_vector_range || vector_value > p.up_vector_range)
-                vector_value = c.rnd();
+                vector_value = c.nextDouble();
             vector[i] = vector_value;
         }
 

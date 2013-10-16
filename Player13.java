@@ -34,7 +34,7 @@ public class Player13 implements ContestSubmission{
 
         for(int i = 0; i < p.population_size; i++)
         {
-            population.add(new Individual(cauchy,p));
+            population.add(new Individual(rand,p));
         }
 
     }
