@@ -1,10 +1,11 @@
 public abstract class Rand {
+
     protected static final java.util.Random random = new java.util.Random();
     protected double mean, dev;
 
     public Rand (double mean, double dev){
-           this.mean = mean;
-            this.dev = dev;
+        this.mean = mean;
+        this.dev = dev;
     }
 
     public abstract double rnd();

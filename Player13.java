@@ -13,22 +13,25 @@ public class Player13 implements ContestSubmission{
     private static final Rand cauchy = new Rand.Cauchy(0d,1d);
 
     final private ArrayList<Individual> population;
-    final private ArrayList<Individual> elite_population;
     final private ArrayList<Individual> parent_population;
+    final private ArrayList<Individual> child_population;
 
     ContestEvaluation evaluation;
     final Parameters p = new Parameters();
 
-    private int eval_limit;
+    private int eval_limit;     // amount of allowed tries on the server
+    private int counter = 0;    // counter that represents the amount of evaluated tries
     final private int parent_size = (int) p.parent_portion * p.population_size;
     final private int elite_size = (int) p.elite_portion * p.population_size;
+
     public Player13 ()
     {
         rand = new Random();
         //Create the populations of 'individuals'
         population = new ArrayList<Individual>(p.population_size);
-        elite_population = new ArrayList<Individual>(elite_size);
         parent_population = new ArrayList<Individual>(parent_size);
+        child_population = new ArrayList<Individual>();
+
         for(int i = 0; i < p.population_size; i++)
         {
             population.add(new Individual(cauchy,p));
@@ -43,7 +46,7 @@ public class Player13 implements ContestSubmission{
         rand.setSeed(seed);
     }
 
-    public void setProperties(Properties props)     // writes the evaluation problems' properties to the parameters-file
+    public void setProperties(Properties props)     // writes the evaluation problems' properties to the parameters-class
     {
         eval_limit = Integer.parseInt(props.getProperty("Evaluations"));
         p.isMultimodal = Boolean.parseBoolean(props.getProperty("Multimodal"));
@@ -55,7 +58,6 @@ public class Player13 implements ContestSubmission{
     {
         // Set evaluation problem used in the run
         this.evaluation = evaluation;
-
 
         // Get evaluation properties
         Properties props = evaluation.getProperties();
@@ -75,18 +77,38 @@ public class Player13 implements ContestSubmission{
         {
             // change settings for "separable"-data
         }
-
     }
 
     public void run()
     {
         //Stay within the amount of tries set by the server
-        for(int i = 0; i < eval_limit; i++)
+        System.out.println("Start Population");
+        while(counter < p.population_size)
         {
-            population.get(i).setFitness((Double) evaluation.evaluate(population.get(i)));
+            population.get(counter).setFitness((Double)evaluation.evaluate(population.get(counter).getVector()));
             Collections.sort(population);
-
+            System.out.println(population.get(counter).getFitness());
+            counter++;
         }
 
+        //Create the parent population
+        for(int i = 0; i < parent_size; i++)
+        {
+            parent_population.add(population.get(i));
+            Collections.sort(parent_population);
+        }
+
+        System.out.println("Child Population");
+        //Create the child population by applying crossover on the parent population
+        for(int j = 0; j < parent_population.size(); j++)
+        {
+            child_population.add(parent_population.get(j).crossover(parent_population.get(j+1),p));
+            child_population.add(parent_population.get(j+1).crossover(parent_population.get(j),p));
+            Individual evaluation_child = child_population.get(j);
+            evaluation_child.setFitness((Double)evaluation.evaluate(evaluation_child.getVector()));
+            counter++;
+            System.out.println(child_population.get(counter).getFitness());
+        }
+            Collections.sort(child_population);
     }
 }

@@ -1,6 +1,6 @@
 // An individual encodes a single vector of numbers
 public class Individual implements Comparable<Individual> {
-    public double vector[];
+    private double vector[];
     private double fitness;
 
 
@@ -38,9 +38,15 @@ public class Individual implements Comparable<Individual> {
         return this.fitness;
     }
 
+    public double[] getVector()
+    {
+        return this.vector;
+    }
+
     public Individual crossover(Individual ind, Parameters p)
     {
-        final int coPoint = 5; // must be set to random within a range
+
+        final int coPoint = 2 + (int)(Math.random() * ((9 - 2) + 1)); // random value within [2,9], thus excluding the first and last vector_value
         Individual child = new Individual(p);
 
         for(int i = 0; i < coPoint;  i++) {
