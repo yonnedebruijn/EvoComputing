@@ -4,7 +4,6 @@ import java.util.Random;
 public class Individual implements Comparable<Individual> {
     private double vector[];
     private double fitness;
-    Random rand;
 
 
     public Individual (Random c, Parameters p)
