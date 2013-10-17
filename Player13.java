@@ -81,8 +81,14 @@ public class Player13 implements ContestSubmission{
     {
         //Stay within the amount of tries set by the server
         System.out.println("Start Population");
+<<<<<<< HEAD
 
         while(counter < eval_limit)
+=======
+        
+        // Hier zou k niet de counter gebruiken maar gewoon een standaard for-loop maken
+        while(counter < p.population_size)
+>>>>>>> 70d5c6892a393788e74500f1d16b402f96dc484e
         {
             for(int g = 0; g < p.population_size; g++)
             {
@@ -94,6 +100,7 @@ public class Player13 implements ContestSubmission{
             }
 
         //Create the parent population
+        // Hier zou ik pas na de for-loop sorteren
         for(int i = 0; i < parent_size; i++)
         {
             parent_population.add(population.get(i));
@@ -102,7 +109,13 @@ public class Player13 implements ContestSubmission{
 
         System.out.println("Child Population");
         //Create the child population by applying crossover on the parent population
+<<<<<<< HEAD
         for(int j = 1; j < parent_population.size(); j++)
+=======
+        // Hier loopt ie dus out of bounds, moeten we even kijken hoe we dat oplossen.
+        // println aangepast
+        for(int j = 0; j < parent_population.size(); j++)
+>>>>>>> 70d5c6892a393788e74500f1d16b402f96dc484e
         {
             child_population.add(parent_population.get(j).crossover(parent_population.get(j-1),p));
             child_population.add(parent_population.get(j-1).crossover(parent_population.get(j),p));
@@ -115,4 +128,7 @@ public class Player13 implements ContestSubmission{
         Collections.sort(child_population);
     }
 }
+<<<<<<< HEAD
 }
+=======
+>>>>>>> 70d5c6892a393788e74500f1d16b402f96dc484e
