@@ -19,8 +19,8 @@ public class Player13 implements ContestSubmission{
 
     private int eval_limit;     // amount of allowed tries on the server
     private int counter = 0;    // counter that represents the amount of evaluated tries
-    final private int parent_size = (int) p.parent_portion * p.population_size;
-    final private int elite_size = (int) p.elite_portion * p.population_size;
+    final private int parent_size = (int) (p.parent_portion * p.population_size);
+    final private int elite_size = (int) (p.elite_portion * p.population_size);
 
     public Player13 ()
     {
@@ -28,7 +28,7 @@ public class Player13 implements ContestSubmission{
         //Create the populations of 'individuals'
         population = new ArrayList<Individual>(p.population_size);
         parent_population = new ArrayList<Individual>(parent_size);
-        child_population = new ArrayList<Individual>();
+        child_population = new ArrayList<Individual>(2*parent_size);
 
         for(int i = 0; i < p.population_size; i++)
         {
@@ -81,6 +81,8 @@ public class Player13 implements ContestSubmission{
     {
         //Stay within the amount of tries set by the server
         System.out.println("Start Population");
+        
+        // Hier zou k niet de counter gebruiken maar gewoon een standaard for-loop maken
         while(counter < p.population_size)
         {
             double fitness = (Double)evaluation.evaluate(population.get(counter).getVector());
@@ -91,6 +93,7 @@ public class Player13 implements ContestSubmission{
         }
 
         //Create the parent population
+        // Hier zou ik pas na de for-loop sorteren
         for(int i = 0; i < parent_size; i++)
         {
             parent_population.add(population.get(i));
@@ -99,6 +102,8 @@ public class Player13 implements ContestSubmission{
 
         System.out.println("Child Population");
         //Create the child population by applying crossover on the parent population
+        // Hier loopt ie dus out of bounds, moeten we even kijken hoe we dat oplossen.
+        // println aangepast
         for(int j = 0; j < parent_population.size(); j++)
         {
             child_population.add(parent_population.get(j).crossover(parent_population.get(j+1),p));
@@ -107,7 +112,7 @@ public class Player13 implements ContestSubmission{
             double fitness = (Double)evaluation.evaluate(evaluation_child.getVector());
             evaluation_child.setFitness(fitness);
             counter++;
-            System.out.println(child_population.get(counter).getFitness());
+            System.out.println(child_population.get(j).getFitness());
         }
             Collections.sort(child_population);
     }
