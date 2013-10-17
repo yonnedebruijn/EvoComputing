@@ -63,15 +63,15 @@ public class Individual implements Comparable<Individual> {
 
     }
 
-    public void mutate(Rand c, java.util.Random r, Parameters p)
+    public void mutate(Random c, java.util.Random r, Parameters p)
     {
         for(int i = 0; i < p.vector_length; i++)
         {
             if(r.nextDouble() < p.mutation_rate)
             {
-                double noise = c.rnd();
+                double noise = c.nextDouble();
                 while(noise < p.lr_mutation_range || noise > p.up_mutation_range)
-                    noise = c.rnd();
+                    noise = c.nextDouble();
                 vector[i] += noise;
             }
         }

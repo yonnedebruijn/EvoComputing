@@ -10,8 +10,6 @@ import java.util.Properties;
 public class Player13 implements ContestSubmission{
     Random rand;
 
-    private static final Rand cauchy = new Rand.Cauchy(0d,1d);
-
     final private ArrayList<Individual> population;
     final private ArrayList<Individual> parent_population;
     final private ArrayList<Individual> child_population;
@@ -85,7 +83,8 @@ public class Player13 implements ContestSubmission{
         System.out.println("Start Population");
         while(counter < p.population_size)
         {
-            population.get(counter).setFitness((Double)evaluation.evaluate(population.get(counter).getVector()));
+            double fitness = (Double)evaluation.evaluate(population.get(counter).getVector());
+            population.get(counter).setFitness(fitness);
             Collections.sort(population);
             System.out.println(population.get(counter).getFitness());
             counter++;
@@ -105,7 +104,8 @@ public class Player13 implements ContestSubmission{
             child_population.add(parent_population.get(j).crossover(parent_population.get(j+1),p));
             child_population.add(parent_population.get(j+1).crossover(parent_population.get(j),p));
             Individual evaluation_child = child_population.get(j);
-            evaluation_child.setFitness((Double)evaluation.evaluate(evaluation_child.getVector()));
+            double fitness = (Double)evaluation.evaluate(evaluation_child.getVector());
+            evaluation_child.setFitness(fitness);
             counter++;
             System.out.println(child_population.get(counter).getFitness());
         }
