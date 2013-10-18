@@ -10,9 +10,9 @@ import java.util.Properties;
 public class Player13 implements ContestSubmission{
     Random rand;
 
-    final private ArrayList<Individual> population;
-    final private ArrayList<Individual> parent_population;
-    final private ArrayList<Individual> child_population;
+    private ArrayList<Individual> population;
+    private ArrayList<Individual> parent_population;
+    private ArrayList<Individual> child_population;
 
     ContestEvaluation evaluation;
     final Parameters p = new Parameters();
@@ -20,20 +20,10 @@ public class Player13 implements ContestSubmission{
     private int eval_limit;     // amount of allowed tries on the server
     private int counter = 0;    // counter that represents the amount of evaluated tries
     final private int parent_size = (int) (p.parent_portion * p.population_size);
-    final private int elite_size = (int) (p.elite_portion * p.population_size);
 
     public Player13 ()
     {
         rand = new Random();
-        //Create the populations of 'individuals'
-        population = new ArrayList<Individual>(p.population_size);
-        parent_population = new ArrayList<Individual>(parent_size);
-        child_population = new ArrayList<Individual>(2*parent_size);
-
-        for(int i = 0; i < p.population_size; i++)
-        {
-            population.add(new Individual(rand,p));
-        }
 
     }
 
@@ -79,28 +69,50 @@ public class Player13 implements ContestSubmission{
 
     public void run()
     {
-        //Stay within the amount of tries set by the server
-        System.out.println("Start Population");
+        //Create the populations of 'individuals'
+        population = new ArrayList<Individual>(p.population_size);
+
+        for(int i = 0; i < p.population_size; i++)
+        {
+            population.add(new Individual(rand,p));
+        }
 
         while(counter < eval_limit)
         {
-            for(int g = 0; g < p.population_size; g++)
+            for(int g = 0; g < population.size(); g++)
             {
                 double fitness = (Double)evaluation.evaluate(population.get(g).getVector());
                 population.get(g).setFitness(fitness);
-                Collections.sort(population);
                 System.out.println(population.get(g).getFitness());
                 counter++;
             }
+            Collections.sort(population);
 
+            System.out.println("Parent Population");
             //Create the parent population
-            for(int i = 0; i < parent_size; i++)
+            int parent_size = (int) (p.parent_portion * population.size());
+            parent_population = new ArrayList<Individual>(parent_size);
+            for(int i = 0; i < parent_population.size(); i++)
             {
                 parent_population.add(population.get(i));
             }
             Collections.sort(parent_population);
 
             System.out.println("Child Population");
+            child_population = new ArrayList<Individual>(parent_population.size());
+            for(int j = 1; j < (int)(parent_population.size() * p.elite_portion); j++)
+            {
+                Individual parent_1 = parent_population.get(j-1);
+                Individual parent_2 = parent_population.get(j);
+                Individual child = parent_1.crossover(parent_2,p);
+                child.setFitness((Double)evaluation.evaluate(child.getVector()));
+            }
+            population.addAll(child_population);
+            Collections.sort(population);
+
+
+
+            /*
             //Create the child population by applying crossover on the parent population
             for(int j = 1; j < parent_population.size(); j++)
             {
@@ -110,9 +122,10 @@ public class Player13 implements ContestSubmission{
                 double fitness = (Double)evaluation.evaluate(evaluation_child.getVector());
                 evaluation_child.setFitness(fitness);
                 counter++;
-                System.out.println(child_population.get(j).getFitness());
             }
             Collections.sort(child_population);
+            */
+
         }
     }
 }
