@@ -12,7 +12,7 @@ public class Individual implements Comparable<Individual> {
         fitness = 0;
         for(int i = 0; i < p.vector_length; i++)
         {
-            double vector_value = p.lr_vector_range + (c.nextDouble()*((p.up_vector_range-p.lr_vector_range)+1));
+            double vector_value = p.lr_vector_range + (c.nextDouble()*(p.up_vector_range-p.lr_vector_range));
             vector[i] = vector_value;
         }
 
@@ -77,7 +77,7 @@ public class Individual implements Comparable<Individual> {
         {
             if(c.nextDouble() < p.mutation_rate)
             {
-                double noise = p.lr_mutation_range + (c.nextDouble()*((p.up_mutation_range-p.lr_mutation_range)+1));
+                double noise = p.lr_mutation_range + (c.nextDouble()*(p.up_mutation_range-p.lr_mutation_range));
                 vector[i] += noise;
             }
         }
@@ -90,7 +90,7 @@ public class Individual implements Comparable<Individual> {
         {
             if(c.nextDouble() < p.mutation_rate)
             {
-                double noise = min + ((c.nextDouble()*(max-min)+1));
+                double noise = min + (c.nextDouble()*(max-min));
                 vector[i] += noise;
             }
         }
