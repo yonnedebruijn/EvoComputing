@@ -85,14 +85,15 @@ public class Player13 implements ContestSubmission{
 		}
 
 		while(counter < eval_limit){
-			for(int g = 0; g < population.size(); g++)
-				Collections.sort(population);
+            Collections.sort(population);
 			ArrayList<Individual> new_population = new ArrayList<Individual>(p.population_size);
-			for(int g = 0; g < p.population_size; g++)
+
+            for(int g = 0; g < p.population_size; g++)
 			{
 				new_population.add(population.get(g));
 			}
-			Collections.sort(population);
+
+            Collections.sort(new_population);
 			population = new_population;
 			System.out.println(population.size());
 			System.out.println("Parent Population");
@@ -141,7 +142,6 @@ public class Player13 implements ContestSubmission{
 			population.addAll(child_population);
 			Collections.sort(population);
 			System.out.println(population.size());
-
 	}
 }
 }

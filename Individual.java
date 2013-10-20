@@ -15,7 +15,6 @@ public class Individual implements Comparable<Individual> {
             double vector_value = p.lr_vector_range + (c.nextDouble()*(p.up_vector_range-p.lr_vector_range));
             vector[i] = vector_value;
         }
-
     }
 
     public Individual (Parameters p)
@@ -58,7 +57,6 @@ public class Individual implements Comparable<Individual> {
         }
 
         return child;
-
     }
 
     public Individual crossoverII(Individual ind, Parameters p)
@@ -81,7 +79,6 @@ public class Individual implements Comparable<Individual> {
                 vector[i] += noise;
             }
         }
-
     }
 
     public void mutateII(Random c, Parameters p,int min, int max)
@@ -94,7 +91,6 @@ public class Individual implements Comparable<Individual> {
                 vector[i] += noise;
             }
         }
-
     }
 
     @Override
