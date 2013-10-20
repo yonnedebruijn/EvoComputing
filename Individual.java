@@ -75,7 +75,7 @@ public class Individual implements Comparable<Individual> {
         return child;
     }
 
-    public void mutate(Random c, Parameters p)
+    public void mutateI(Random c, Parameters p)
     {
         for(int i = 0; i < p.vector_length; i++)
         {
@@ -84,6 +84,19 @@ public class Individual implements Comparable<Individual> {
                 double noise = c.nextDouble();
                 while(noise < p.lr_mutation_range || noise > p.up_mutation_range)
                     noise = c.nextDouble();
+                vector[i] += noise;
+            }
+        }
+
+    }
+
+    public void mutateII(Random c, Parameters p,int lr_range, int up_range)
+    {
+        for(int i = 0; i < p.vector_length; i++)
+        {
+            if(c.nextDouble() < p.mutation_rate)
+            {
+                double noise = c.nextDouble()*(up_range * 2)-lr_range;
                 vector[i] += noise;
             }
         }
