@@ -114,13 +114,13 @@ public class Player13 implements ContestSubmission{
 			{
 				Individual parent_1 = parent_population.get(j-1);
 				Individual parent_2 = parent_population.get(j);
-				Individual child1 = parent_1.crossover(parent_2,p);
+				Individual child1 = parent_1.crossoverI(parent_2,p);
 				child_population.add(child1);
 				child1.setFitness((Double)evaluation.evaluate(child1.getVector()));
 				counter++;
 				System.out.println(j-1+","+child1.getFitness());
 
-				Individual child2 = parent_2.crossover(parent_1,p);
+				Individual child2 = parent_2.crossoverI(parent_1,p);
 				child_population.add(child2);
 				child2.setFitness((Double)evaluation.evaluate(child2.getVector()));
 				counter++;
@@ -131,7 +131,7 @@ public class Player13 implements ContestSubmission{
 			while (child_population.size() < parent_size){
 				Individual parent_1 = parent_population.get(child_population.size()-1);
 				Individual parent_2 = parent_population.get(child_population.size());
-				Individual child = parent_1.crossover(parent_2,p);
+				Individual child = parent_1.crossoverI(parent_2,p);
 				child.mutate(rand,p);
 				child.setFitness((Double)evaluation.evaluate(child.getVector()));
 				child_population.add(child);

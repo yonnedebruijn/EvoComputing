@@ -47,7 +47,7 @@ public class Individual implements Comparable<Individual> {
         return this.vector;
     }
 
-    public Individual crossover(Individual ind, Parameters p)
+    public Individual crossoverI(Individual ind, Parameters p)
     {
 
         final int coPoint = 2 + (int)(Math.random() * ((9 - 2) + 1)); // random value within [2,9], thus excluding the first and last vector_value
@@ -63,6 +63,16 @@ public class Individual implements Comparable<Individual> {
 
         return child;
 
+    }
+
+    public Individual crossoverII(Individual ind, Parameters p)
+    {
+        Individual child = new Individual(p);
+        for(int i = 0; i < p.vector_length; i++)
+        {
+            child.vector[i] = (this.vector[i] + ind.getVector()[i]) / 2;
+        }
+        return child;
     }
 
     public void mutate(Random c, Parameters p)
