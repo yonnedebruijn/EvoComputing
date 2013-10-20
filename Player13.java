@@ -27,7 +27,6 @@ public class Player13 implements ContestSubmission{
 
     }
 
-
     public void setSeed(long seed)
     {
         // Set seed of algortihms random process
@@ -105,27 +104,12 @@ public class Player13 implements ContestSubmission{
                 Individual parent_1 = parent_population.get(j-1);
                 Individual parent_2 = parent_population.get(j);
                 Individual child = parent_1.crossover(parent_2,p);
+                child.mutate(rand,p);
                 child.setFitness((Double)evaluation.evaluate(child.getVector()));
             }
             population.addAll(child_population);
             Collections.sort(population);
 
-
-
-            /*
-            //Create the child population by applying crossover on the parent population
-            for(int j = 1; j < parent_population.size(); j++)
-            {
-                child_population.add(parent_population.get(j).crossover(parent_population.get(j-1),p));
-                child_population.add(parent_population.get(j-1).crossover(parent_population.get(j),p));
-                Individual evaluation_child = child_population.get(j);
-                double fitness = (Double)evaluation.evaluate(evaluation_child.getVector());
-                evaluation_child.setFitness(fitness);
-                counter++;
-            }
-            Collections.sort(child_population);
-            */
-
-        }
     }
+}
 }
