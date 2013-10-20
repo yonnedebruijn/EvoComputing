@@ -77,13 +77,12 @@ public class Player13 implements ContestSubmission{
             population.add(new Individual(rand,p));
         }
 
-        while(counter < eval_limit)
-        {
+        //while(counter < eval_limit){
             for(int g = 0; g < population.size(); g++)
             {
                 double fitness = (Double)evaluation.evaluate(population.get(g).getVector());
                 population.get(g).setFitness(fitness);
-                System.out.println(population.get(g).getFitness());
+                System.out.println(g + ", " + population.get(g).getFitness());
                 counter++;
             }
             Collections.sort(population);
@@ -92,20 +91,24 @@ public class Player13 implements ContestSubmission{
             //Create the parent population
             int parent_size = (int) (p.parent_portion * population.size());
             parent_population = new ArrayList<Individual>(parent_size);
-            for(int i = 0; i < parent_population.size(); i++)
+            for(int i = 0; i < parent_size; i++)
             {
                 parent_population.add(population.get(i));
+                System.out.println(i + ", " + parent_population.get(i).getFitness());
             }
             Collections.sort(parent_population);
 
             System.out.println("Child Population");
-            child_population = new ArrayList<Individual>(parent_population.size());
-            for(int j = 1; j < (int)(parent_population.size() * p.elite_portion); j++)
+            child_population = new ArrayList<Individual>(2*parent_size);
+            System.out.println("Elite childs:");
+            for(int j = 1; j <= (int)(parent_size * p.elite_portion); j++)
             {
                 Individual parent_1 = parent_population.get(j-1);
                 Individual parent_2 = parent_population.get(j);
                 Individual child = parent_1.crossover(parent_2,p);
+                child_population.add(child);
                 child.setFitness((Double)evaluation.evaluate(child.getVector()));
+                System.out.println(j-1+","+child.getFitness());
             }
             population.addAll(child_population);
             Collections.sort(population);
@@ -126,6 +129,6 @@ public class Player13 implements ContestSubmission{
             Collections.sort(child_population);
             */
 
-        }
+        //}
     }
 }
