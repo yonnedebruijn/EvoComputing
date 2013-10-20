@@ -98,7 +98,6 @@ public class Player13 implements ContestSubmission{
 
             System.out.println("Child Population");
             child_population = new ArrayList<Individual>(2*parent_size);
-            System.out.println("Elite childs:");
 
         for(int j = 1; j <= parent_size; j++)
             {
