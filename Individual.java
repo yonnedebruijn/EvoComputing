@@ -77,9 +77,7 @@ public class Individual implements Comparable<Individual> {
         {
             if(c.nextDouble() < p.mutation_rate)
             {
-                double noise = c.nextDouble();
-                while(noise < p.lr_mutation_range || noise > p.up_mutation_range)
-                    noise = c.nextDouble();
+                double noise = p.lr_mutation_range + (c.nextDouble()*((p.up_mutation_range-p.lr_mutation_range)+1));
                 vector[i] += noise;
             }
         }
@@ -92,7 +90,7 @@ public class Individual implements Comparable<Individual> {
         {
             if(c.nextDouble() < p.mutation_rate)
             {
-                double noise = min + (c.nextDouble()*(max-min)+1);
+                double noise = min + ((c.nextDouble()*(max-min)+1));
                 vector[i] += noise;
             }
         }
