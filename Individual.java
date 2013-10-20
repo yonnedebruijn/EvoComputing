@@ -12,11 +12,11 @@ public class Individual implements Comparable<Individual> {
         fitness = 0;
         for(int i = 0; i < p.vector_length; i++)
         {
-            double vector_value = c.nextDouble();
+            double vector_value = c.nextDouble()*10-5;
 
             while(vector_value < p.lr_vector_range || vector_value > p.up_vector_range)
-                vector_value = c.nextDouble();
-                System.out.println(vector_value);
+                vector_value = c.nextDouble()*10-5;
+                //System.out.println(vector_value);
             vector[i] = vector_value;
         }
 
