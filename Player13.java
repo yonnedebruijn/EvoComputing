@@ -76,7 +76,7 @@ public class Player13 implements ContestSubmission{
             population.add(new Individual(rand,p));
         }
 
-        //while(counter < eval_limit){
+        while(counter < eval_limit){
             for(int g = 0; g < population.size(); g++)
             {
                 double fitness = (Double)evaluation.evaluate(population.get(g).getVector());
@@ -85,7 +85,6 @@ public class Player13 implements ContestSubmission{
                 counter++;
             }
             Collections.sort(population);
-
             System.out.println("Parent Population");
             //Create the parent population
             int parent_size = (int) (p.parent_portion * population.size());
@@ -100,42 +99,20 @@ public class Player13 implements ContestSubmission{
             System.out.println("Child Population");
             child_population = new ArrayList<Individual>(2*parent_size);
             System.out.println("Elite childs:");
-            for(int j = 1; j <= (int)(parent_size * p.elite_portion); j++)
+
+        for(int j = 1; j <= parent_size; j++)
             {
                 Individual parent_1 = parent_population.get(j-1);
                 Individual parent_2 = parent_population.get(j);
                 Individual child = parent_1.crossover(parent_2,p);
-<<<<<<< HEAD
                 child.mutate(rand,p);
-=======
-                child_population.add(child);
->>>>>>> c7dca25287a13bfabcd15bb319c67abaa9c9c8a2
                 child.setFitness((Double)evaluation.evaluate(child.getVector()));
+                child_population.add(child);
                 System.out.println(j-1+","+child.getFitness());
             }
             population.addAll(child_population);
             Collections.sort(population);
 
-<<<<<<< HEAD
-=======
-
-
-            /*
-            //Create the child population by applying crossover on the parent population
-            for(int j = 1; j < parent_population.size(); j++)
-            {
-                child_population.add(parent_population.get(j).crossover(parent_population.get(j-1),p));
-                child_population.add(parent_population.get(j-1).crossover(parent_population.get(j),p));
-                Individual evaluation_child = child_population.get(j);
-                double fitness = (Double)evaluation.evaluate(evaluation_child.getVector());
-                evaluation_child.setFitness(fitness);
-                counter++;
-            }
-            Collections.sort(child_population);
-            */
-
-        //}
->>>>>>> c7dca25287a13bfabcd15bb319c67abaa9c9c8a2
     }
 }
 }
